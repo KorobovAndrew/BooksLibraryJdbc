@@ -1,7 +1,13 @@
 package ru.andrewtest.bookslibrary.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class BooksLibraryController {
+    @GetMapping("/people")
+    public String getPeople() {
+        return "redirect:/people.html";
+    }
 }
