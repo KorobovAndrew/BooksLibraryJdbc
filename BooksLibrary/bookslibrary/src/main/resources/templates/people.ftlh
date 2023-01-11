@@ -8,8 +8,19 @@
     <title>People</title>
 </head>
 <body>
-<h1>Hello World!</h1>
-<form method="get" action="/people">
-</form>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>FullName</th>
+        <th>YearOfBirth</th>
+    </tr>
+    <#list people as person>
+        <tr>
+            <td>${person.id}</td>
+            <td>${person.fullName}</td>
+            <td>${person.yearOfBirth}</td>
+        </tr>
+    </#list>
+</table>
 </body>
 </html>
