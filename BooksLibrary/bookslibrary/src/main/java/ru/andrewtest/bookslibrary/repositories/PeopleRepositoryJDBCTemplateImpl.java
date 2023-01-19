@@ -9,16 +9,16 @@ import java.util.List;
 
 @Component
 public class PeopleRepositoryJDBCTemplateImpl implements PeopleRepository {
-    private final JdbcTemplate jdbcTemplate;
 
     //language=SQL
     private static final String SQL_GET_ALL_PEOPLE = "select * from person";
+    private final JdbcTemplate jdbcTemplatePerson;
 
-    public PeopleRepositoryJDBCTemplateImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public PeopleRepositoryJDBCTemplateImpl(JdbcTemplate jdbcTemplatePerson) {
+        this.jdbcTemplatePerson = jdbcTemplatePerson;
     }
 
-    private final static RowMapper<Person> personRawMapper = (row, rawNum) -> {
+    private final static RowMapper<Person> personRawMapper = (row, rowNum) -> {
         int id = row.getInt("id");
         String fullName = row.getString("fullName");
         Integer yearOfBirth = row.getInt("yearOfBirth");
@@ -27,6 +27,6 @@ public class PeopleRepositoryJDBCTemplateImpl implements PeopleRepository {
 
     @Override
     public List<Person> findAll() {
-        return jdbcTemplate.query(SQL_GET_ALL_PEOPLE, personRawMapper);
+        return jdbcTemplatePerson.query(SQL_GET_ALL_PEOPLE, personRawMapper);
     }
 }
