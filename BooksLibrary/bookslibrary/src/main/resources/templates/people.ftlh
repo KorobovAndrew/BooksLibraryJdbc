@@ -11,10 +11,10 @@
 <h2>Пользователи библиотеки</h2>
 <p>
     <#list people as person>
-        ${person.fullName}, ${person.yearOfBirth}<br>
+        ${person.fullName}, #{person.yearOfBirth}<br>
     </#list>
 </p>
 <hr>
-Добавить человека
+<a href="person_addition.html">Добавить человека</a>
 </body>
 </html>
