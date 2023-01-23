@@ -18,6 +18,9 @@ public class PeopleRepositoryJDBCTemplateImpl implements PeopleRepository {
     private static final String SQL_GET_PERSON_BY_ID = "select * from person where id = ?";
     //language=SQL
     private static final String SQL_UPDATE_PERSON = "update person set fullName = ?, yearOfBirth = ? where id = ?";
+
+    //language=SQL
+    private static final String SQL_DELETE_PERSON_BY_ID = "delete from person where id = ?";
     private final JdbcTemplate jdbcTemplatePerson;
 
     public PeopleRepositoryJDBCTemplateImpl(JdbcTemplate jdbcTemplatePerson) {
@@ -42,12 +45,17 @@ public class PeopleRepositoryJDBCTemplateImpl implements PeopleRepository {
     }
 
     @Override
-    public Person getPersonById(int id) {
+    public Person findPersonById(int id) {
         return jdbcTemplatePerson.queryForObject(SQL_GET_PERSON_BY_ID, personRawMapper, id);
     }
 
     @Override
     public void editPerson(int personId, String fullName, Integer yearOfBirth) {
         jdbcTemplatePerson.update(SQL_UPDATE_PERSON, fullName, yearOfBirth, personId);
+    }
+
+    @Override
+    public void deletePerson(int personId) {
+        jdbcTemplatePerson.update(SQL_DELETE_PERSON_BY_ID, personId);
     }
 }
