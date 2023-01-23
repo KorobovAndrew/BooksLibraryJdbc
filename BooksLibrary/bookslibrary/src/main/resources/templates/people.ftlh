@@ -11,7 +11,7 @@
 <h2>Пользователи библиотеки</h2>
 <p>
     <#list people as person>
-        ${person.fullName}, #{person.yearOfBirth}<br>
+        <a href="http://localhost:8080/people/${person.id}">${person.fullName}, #{person.yearOfBirth}</a><br>
     </#list>
 </p>
 <hr>
