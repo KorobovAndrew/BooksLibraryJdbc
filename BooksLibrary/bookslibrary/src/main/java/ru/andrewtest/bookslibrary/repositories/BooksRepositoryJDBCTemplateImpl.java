@@ -12,6 +12,9 @@ public class BooksRepositoryJDBCTemplateImpl implements BooksRepository{
 
     //language=SQL
     private static final String SQL_GET_ALL_BOOKS = "select * from book";
+
+    //language=SQL
+    private static final String SQL_GET_BOOKS_BY_PERSON_ID = "select * from book where borrower_id = ?";
     private final JdbcTemplate jdbcTemplateBook;
 
     public BooksRepositoryJDBCTemplateImpl (JdbcTemplate jdbcTemplateBook){
@@ -23,11 +26,15 @@ public class BooksRepositoryJDBCTemplateImpl implements BooksRepository{
         String title = row.getString("title");
         String author = row.getString("author");
         Integer yearOfWriting = row.getInt("yearOfWriting");
-        //Integer borrowerId = row.getInt("borrowerId");
         return new Book(id, title, author, yearOfWriting);
     };
     @Override
     public List<Book> findAll() {
         return jdbcTemplateBook.query(SQL_GET_ALL_BOOKS, bookRowMapper);
+    }
+
+    @Override
+    public List<Book> findBooksByPersonId(int personId) {
+        return jdbcTemplateBook.query(SQL_GET_BOOKS_BY_PERSON_ID, bookRowMapper, personId);
     }
 }

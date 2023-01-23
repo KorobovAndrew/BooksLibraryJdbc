@@ -9,7 +9,9 @@ public interface PeopleRepository {
 
     void addPerson(String fullName, Integer yearOfBirth);
 
-    Person getPersonById(int id);
+    Person findPersonById(int id);
 
     void editPerson(int personId, String fullName, Integer yearOfBirth);
+
+    void deletePerson(int personId);
 }
