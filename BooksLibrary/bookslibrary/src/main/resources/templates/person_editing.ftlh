@@ -5,10 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Person</title>
+    <title>Редактирование карточки пользователя</title>
 </head>
 <body>
-<h2>Изменение данных пользователя</h2>
 <form method="post" action="/people/${person.id}/edit">
     <label>Введите ФИО:
         <input name="fullName" value="${person.fullName}">
