@@ -11,7 +11,7 @@ public interface PeopleRepository {
 
     Person findPersonById(int id);
 
-    void editPerson(int personId, String fullName, Integer yearOfBirth);
+    void updatePerson(int personId, String fullName, Integer yearOfBirth);
 
     void deletePerson(int personId);
 }
