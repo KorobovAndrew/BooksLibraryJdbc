@@ -1,15 +1,16 @@
-package ru.andrewtest.bookslibrary.repositories;
+package ru.andrewtest.bookslibrary.services;
 
 import ru.andrewtest.bookslibrary.models.Person;
 
 import java.util.List;
 
-public interface PeopleRepository {
-    List<Person> findAll();
+public interface PersonService {
+
+    List<Person> findAllPeople();
 
     void addPerson(String fullName, Integer yearOfBirth);
 
-    Person findPersonById(int id);
+    Person findPersonById(int personId);
 
     void updatePerson(int personId, String fullName, Integer yearOfBirth);
 

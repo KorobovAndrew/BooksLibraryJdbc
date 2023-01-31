@@ -1,14 +1,11 @@
-package ru.andrewtest.bookslibrary.repositories;
+package ru.andrewtest.bookslibrary.services;
 
 import ru.andrewtest.bookslibrary.models.Book;
-import ru.andrewtest.bookslibrary.models.Person;
 
 import java.util.List;
 
-public interface BooksRepository {
+public interface BookService {
     List<Book> findAll();
-
-    List<Book> findBooksByPersonId(int personId);
 
     void addBook(String title, String author, Integer yearOfWriting);
 
@@ -17,6 +14,8 @@ public interface BooksRepository {
     void updateBook(String title, String author, Integer yearOfWriting, int bookId);
 
     void deleteBookById(int bookId);
+
+    List<Book> findBooksByPersonId(int personId);
 
     void deleteLinkOnPerson(int bookId);
 
