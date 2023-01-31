@@ -3,14 +3,12 @@ package ru.andrewtest.bookslibrary.repositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.tags.HtmlEscapeTag;
 import ru.andrewtest.bookslibrary.models.Book;
-import ru.andrewtest.bookslibrary.models.Person;
 
 import java.util.List;
 
 @Component
-public class BooksRepositoryJDBCTemplateImpl implements BooksRepository {
+public class BookRepositoryJDBCTemplateImpl implements BookRepository {
 
     //language=SQL
     private static final String SQL_GET_ALL_BOOKS = "select * from book";
@@ -38,7 +36,7 @@ public class BooksRepositoryJDBCTemplateImpl implements BooksRepository {
 
     private final JdbcTemplate jdbcTemplateBook;
 
-    public BooksRepositoryJDBCTemplateImpl(JdbcTemplate jdbcTemplateBook) {
+    public BookRepositoryJDBCTemplateImpl(JdbcTemplate jdbcTemplateBook) {
         this.jdbcTemplateBook = jdbcTemplateBook;
     }
 

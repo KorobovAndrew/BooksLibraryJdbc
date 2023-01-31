@@ -4,28 +4,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.andrewtest.bookslibrary.forms.PersonDto;
 import ru.andrewtest.bookslibrary.models.Book;
 import ru.andrewtest.bookslibrary.models.Person;
-import ru.andrewtest.bookslibrary.repositories.BooksRepository;
-import ru.andrewtest.bookslibrary.repositories.PeopleRepository;
+import ru.andrewtest.bookslibrary.services.BookService;
+import ru.andrewtest.bookslibrary.services.PersonService;
 
 import java.util.List;
 
 @RequestMapping("/books")
 @Controller
 public class BookController {
-    private final BooksRepository booksRepository;
-    private final PeopleRepository peopleRepository;
+    private final BookService bookService;
+    private final PersonService personService;
 
     @Autowired
-    public BookController(BooksRepository booksRepository, PeopleRepository peopleRepository) {
-        this.booksRepository = booksRepository;
-        this.peopleRepository = peopleRepository;
+    public BookController(BookService bookService, PersonService personService) {
+        this.bookService = bookService;
+        this.personService = personService;
     }
 
     @GetMapping
     public String getBooks(Model model) {
-        List<Book> books = booksRepository.findAll();
+        List<Book> books = bookService.findAll();
         model.addAttribute("books", books);
         return "/books";
     }
@@ -34,13 +35,13 @@ public class BookController {
     public String addBook(@RequestParam("title") String title,
                           @RequestParam("author") String author,
                           @RequestParam("yearOfWriting") Integer yearOfWriting) {
-        booksRepository.addBook(title, author, yearOfWriting);
+        bookService.addBook(title, author, yearOfWriting);
         return "redirect:/books";
     }
 
     @GetMapping("/{book-id}/edit")
     public String getBookEditingPage(Model model, @PathVariable("book-id") int bookId) {
-        Book book = booksRepository.findBookById(bookId);
+        Book book = bookService.findBookById(bookId);
         model.addAttribute("book", book);
         return "book_editing";
     }
@@ -50,17 +51,17 @@ public class BookController {
                            @RequestParam("title") String title,
                            @RequestParam("author") String author,
                            @RequestParam("yearOfWriting") Integer yearOfWriting) {
-        booksRepository.updateBook(title, author, yearOfWriting, bookId);
+        bookService.updateBook(title, author, yearOfWriting, bookId);
         return "redirect:/books";
     }
 
     @GetMapping("/{book-id}")
     public String getBookPage(Model model, @PathVariable("book-id") int bookId) {
-        Book book = booksRepository.findBookById(bookId);
-        List<Person> people = peopleRepository.findAll();
+        Book book = bookService.findBookById(bookId);
+        List<Person> people = personService.findAllPeople();
         Person person = null;
         if (book.getBorrowerId() != 0)
-            person = peopleRepository.findPersonById(book.getBorrowerId());
+            person = personService.findPersonById(book.getBorrowerId());
         model.addAttribute("book", book);
         model.addAttribute("borrower", person);
         model.addAttribute("people", people);
@@ -69,19 +70,19 @@ public class BookController {
 
     @PostMapping("/{book-id}/delete")
     public String deleteBook(@PathVariable("book-id") int bookId) {
-        booksRepository.deleteBookById(bookId);
+        bookService.deleteBookById(bookId);
         return "redirect:/books";
     }
 
     @PostMapping("/{book-id}/free-up")
     public String freeUpTheBook(@PathVariable("book-id") int bookId) {
-        booksRepository.deleteLinkOnPerson(bookId);
+        bookService.deleteLinkOnPerson(bookId);
         return "redirect:/books/{book-id}";
     }
 
     @PostMapping("/{book-id}/updateBorrower")
     public String updateBorrower(String newBorrower, @PathVariable("book-id") int bookId) {
-        booksRepository.updateBorrowerId(newBorrower, bookId);
+        bookService.updateBorrowerId(newBorrower, bookId);
         return "redirect:/books/{book-id}";
     }
 }

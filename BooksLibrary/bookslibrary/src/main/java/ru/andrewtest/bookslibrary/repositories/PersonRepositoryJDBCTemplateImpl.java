@@ -8,7 +8,7 @@ import ru.andrewtest.bookslibrary.models.Person;
 import java.util.List;
 
 @Component
-public class PeopleRepositoryJDBCTemplateImpl implements PeopleRepository {
+public class PersonRepositoryJDBCTemplateImpl implements PersonRepository {
 
     //language=SQL
     private static final String SQL_GET_ALL_PEOPLE = "select * from person";
@@ -23,7 +23,7 @@ public class PeopleRepositoryJDBCTemplateImpl implements PeopleRepository {
     private static final String SQL_DELETE_PERSON_BY_ID = "delete from person where id = ?";
     private final JdbcTemplate jdbcTemplatePerson;
 
-    public PeopleRepositoryJDBCTemplateImpl(JdbcTemplate jdbcTemplatePerson) {
+    public PersonRepositoryJDBCTemplateImpl(JdbcTemplate jdbcTemplatePerson) {
         this.jdbcTemplatePerson = jdbcTemplatePerson;
     }
 
