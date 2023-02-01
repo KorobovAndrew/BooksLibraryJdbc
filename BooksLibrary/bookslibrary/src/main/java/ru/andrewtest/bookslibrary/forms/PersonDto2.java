@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class PersonDto {
+public class PersonDto2 {
     private String fullName;
-    private Integer yearOfBirth;
 }

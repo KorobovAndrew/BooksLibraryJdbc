@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.andrewtest.bookslibrary.forms.PersonDto;
+import ru.andrewtest.bookslibrary.forms.BookDto1;
+import ru.andrewtest.bookslibrary.forms.PersonDto1;
+import ru.andrewtest.bookslibrary.forms.PersonDto2;
 import ru.andrewtest.bookslibrary.models.Book;
-import ru.andrewtest.bookslibrary.models.Person;
 import ru.andrewtest.bookslibrary.services.BookService;
 import ru.andrewtest.bookslibrary.services.PersonService;
 
@@ -26,7 +27,7 @@ public class BookController {
 
     @GetMapping
     public String getBooks(Model model) {
-        List<Book> books = bookService.findAll();
+        List<BookDto1> books = bookService.findAllBookDto1();
         model.addAttribute("books", books);
         return "/books";
     }
@@ -41,7 +42,7 @@ public class BookController {
 
     @GetMapping("/{book-id}/edit")
     public String getBookEditingPage(Model model, @PathVariable("book-id") int bookId) {
-        Book book = bookService.findBookById(bookId);
+        BookDto1 book = bookService.findBookDto1ById(bookId);
         model.addAttribute("book", book);
         return "book_editing";
     }
@@ -58,10 +59,8 @@ public class BookController {
     @GetMapping("/{book-id}")
     public String getBookPage(Model model, @PathVariable("book-id") int bookId) {
         Book book = bookService.findBookById(bookId);
-        List<Person> people = personService.findAllPeople();
-        Person person = null;
-        if (book.getBorrowerId() != 0)
-            person = personService.findPersonById(book.getBorrowerId());
+        List<PersonDto1> people = personService.findAllPersonDto1();
+        PersonDto2 person= personService.findPersonDto2ById(book.getBorrowerId());
         model.addAttribute("book", book);
         model.addAttribute("borrower", person);
         model.addAttribute("people", people);
@@ -81,7 +80,8 @@ public class BookController {
     }
 
     @PostMapping("/{book-id}/updateBorrower")
-    public String updateBorrower(String newBorrower, @PathVariable("book-id") int bookId) {
+    public String updateBorrower(@RequestParam("newBorrower") String newBorrower,
+                                 @PathVariable("book-id") int bookId) {
         bookService.updateBorrowerId(newBorrower, bookId);
         return "redirect:/books/{book-id}";
     }
