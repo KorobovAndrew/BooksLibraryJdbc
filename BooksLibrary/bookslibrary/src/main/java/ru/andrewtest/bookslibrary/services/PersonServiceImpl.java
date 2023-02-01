@@ -2,6 +2,8 @@ package ru.andrewtest.bookslibrary.services;
 
 import org.springframework.stereotype.Component;
 import ru.andrewtest.bookslibrary.factories.PersonDtoFactory;
+import ru.andrewtest.bookslibrary.forms.PersonDto1;
+import ru.andrewtest.bookslibrary.forms.PersonDto2;
 import ru.andrewtest.bookslibrary.models.Person;
 import ru.andrewtest.bookslibrary.repositories.PersonRepository;
 
@@ -17,8 +19,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> findAllPeople() {
-        List<Person> people = personRepository.findAll();
-        return people;
+        return personRepository.findAll();
     }
 
     @Override
@@ -28,7 +29,17 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person findPersonById(int personId) {
+        if (personId == 0)
+            return null;
         return personRepository.findPersonById(personId);
+    }
+
+    @Override
+    public PersonDto2 findPersonDto2ById(Integer personId) {
+        if (personId == 0)
+            return null;
+        Person person = personRepository.findPersonById(personId);
+        return PersonDtoFactory.createPersonDto2(person);
     }
 
     @Override
@@ -39,5 +50,15 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void deletePerson(int personId) {
         personRepository.deletePerson(personId);
+    }
+
+    @Override
+    public List<PersonDto1> findAllPersonDto1() {
+        List<Person> people = personRepository.findAll();
+        return people
+                .stream()
+                //.map(person -> PersonDtoFactory.createPersonDto1(person)) - стандартная запись
+                .map(PersonDtoFactory::createPersonDto1) // - прокачанная запись
+                .toList();
     }
 }

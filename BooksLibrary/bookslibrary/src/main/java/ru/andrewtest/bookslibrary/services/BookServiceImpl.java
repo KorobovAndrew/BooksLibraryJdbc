@@ -1,6 +1,9 @@
 package ru.andrewtest.bookslibrary.services;
 
 import org.springframework.stereotype.Component;
+import ru.andrewtest.bookslibrary.factories.BookDtoFactory;
+import ru.andrewtest.bookslibrary.forms.BookDto1;
+import ru.andrewtest.bookslibrary.forms.BookDto2;
 import ru.andrewtest.bookslibrary.models.Book;
 import ru.andrewtest.bookslibrary.repositories.BookRepository;
 
@@ -15,8 +18,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findAll() {
-        return bookRepository.findAll();
+    public List<BookDto1> findAllBookDto1() {
+        List<Book> books = bookRepository.findAll();
+        return books.stream()
+                .map(BookDtoFactory::createBookDto1)
+                .toList();
     }
 
     @Override
@@ -30,6 +36,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public BookDto1 findBookDto1ById(int bookId) {
+        Book book = bookRepository.findBookById(bookId);
+        return BookDtoFactory.createBookDto1(book);
+    }
+
+    @Override
     public void updateBook(String title, String author, Integer yearOfWriting, int bookId) {
         bookRepository.updateBook(title, author, yearOfWriting, bookId);
     }
@@ -40,8 +52,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findBooksByPersonId(int personId) {
-        return bookRepository.findBooksByPersonId(personId);
+    public List<BookDto2> findAllBookDto2ByPersonId(int personId) {
+        List<Book> books = bookRepository.findBooksByPersonId(personId);
+        return books.stream()
+                .map(BookDtoFactory::createBookDto2)
+                .toList();
     }
 
     @Override
