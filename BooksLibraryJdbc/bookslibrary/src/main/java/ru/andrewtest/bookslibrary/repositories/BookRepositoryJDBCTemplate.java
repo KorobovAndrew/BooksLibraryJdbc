@@ -8,7 +8,7 @@ import ru.andrewtest.bookslibrary.models.Book;
 import java.util.List;
 
 @Component
-public class BookRepositoryJDBCTemplateImpl implements BookRepository {
+public class BookRepositoryJDBCTemplate implements BookRepository {
 
     //language=SQL
     private static final String SQL_GET_ALL_BOOKS = "select * from book";
@@ -36,7 +36,7 @@ public class BookRepositoryJDBCTemplateImpl implements BookRepository {
 
     private final JdbcTemplate jdbcTemplateBook;
 
-    public BookRepositoryJDBCTemplateImpl(JdbcTemplate jdbcTemplateBook) {
+    public BookRepositoryJDBCTemplate(JdbcTemplate jdbcTemplateBook) {
         this.jdbcTemplateBook = jdbcTemplateBook;
     }
 

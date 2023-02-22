@@ -1,6 +1,5 @@
 package ru.andrewtest.bookslibrary.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ public class BookController {
     private final BookService bookService;
     private final PersonService personService;
 
-    @Autowired
     public BookController(BookService bookService, PersonService personService) {
         this.bookService = bookService;
         this.personService = personService;
