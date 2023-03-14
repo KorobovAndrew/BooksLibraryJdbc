@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    username: ${postgre_username}
-    password: ${postgre_password}
-    url: jdbc:postgresql://localhost:5432/books_library
